@@ -212,7 +212,7 @@ bool CGUIControlFactory::GetDimension(const TiXmlNode *pRootNode, const char* st
     if (!min) min = 1;
     return true;
   }
-  value = (float)atof(pNode->FirstChild()->Value());
+  value = ParsePosition(pNode->FirstChild()->Value(), parentSize);
   return true;
 }
 
@@ -1265,7 +1265,7 @@ CGUIControl* CGUIControlFactory::Create(int parentID, const CRect &rect, TiXmlEl
   {
     control = new CGUISliderControl(
       parentID, id, posX, posY, width, height,
-      textureBar, textureNib, textureNibFocus, SPIN_CONTROL_TYPE_TEXT);
+      textureBar, textureNib, textureNibFocus, SLIDER_CONTROL_TYPE_PERCENTAGE);
 
     ((CGUISliderControl *)control)->SetInfo(singleInfo);
     ((CGUISliderControl *)control)->SetAction(action);
@@ -1274,7 +1274,7 @@ CGUIControl* CGUIControlFactory::Create(int parentID, const CRect &rect, TiXmlEl
   {
     control = new CGUISettingsSliderControl(
       parentID, id, posX, posY, width, height, sliderWidth, sliderHeight, textureFocus, textureNoFocus,
-      textureBar, textureNib, textureNibFocus, labelInfo, SPIN_CONTROL_TYPE_TEXT);
+      textureBar, textureNib, textureNibFocus, labelInfo, SLIDER_CONTROL_TYPE_PERCENTAGE);
 
     ((CGUISettingsSliderControl *)control)->SetText(strLabel);
     ((CGUISettingsSliderControl *)control)->SetInfo(singleInfo);
@@ -1345,7 +1345,7 @@ CGUIControl* CGUIControlFactory::Create(int parentID, const CRect &rect, TiXmlEl
   }
   else if (type == CGUIControl::GUICONTAINER_EPGGRID)
   {
-    control = new CGUIEPGGridContainer(parentID, id, posX, posY, width, height, orientation, scrollTime, preloadItems, timeBlocks, rulerUnit, textureProgressIndicator);
+    control = new CGUIEPGGridContainer(parentID, id, posX, posY, width, height, scrollTime, preloadItems, timeBlocks, rulerUnit, textureProgressIndicator);
     ((CGUIEPGGridContainer *)control)->LoadLayout(pControlNode);
     ((CGUIEPGGridContainer *)control)->SetRenderOffset(offset);
     ((CGUIEPGGridContainer *)control)->SetType(viewType, viewLabel);
